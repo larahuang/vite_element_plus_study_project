@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+onMounted(() => {
+  console.log('位址', import.meta.env.VITE_API_URL)
+})
 </script>
 
 <template>
