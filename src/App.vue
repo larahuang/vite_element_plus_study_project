@@ -1,12 +1,20 @@
 <template>
   <div>
     <router-view></router-view>
+    <a @click="addBlogItem">test</a>
+    <ul>
+      <li v-for="(item,UID) in lists" :key="UID">
+       {{ UID +1 }} {{ item.title }}
+      </li>
+    </ul>
+
+
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref,onMounted } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 interface listType {
   UID?: string;
@@ -35,18 +43,48 @@ const lists = ref<listType[]>([]);
 const getData = async () => {
   try {
     const api = `${import.meta.env.VITE_API_URL}/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=200`;
-    await axios.get(api)
-    const res = await axios.get(api);
-    console.log('culture', res.data, typeof res.data[0].masterUnit
-      , 'otherUnit', typeof res.data[0].otherUnit, 'showInfos', typeof res.data[0].showInfo);
-    if (res.status === 200) {
-      lists.value = res.data;
+    // 請求表頭
+    let headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      //  Authentication: 'secret'
+      //  "Authorization": `Bearer ${token}`,
     }
-   
+    const res = await fetch(api, { headers: headers, method: "GET" });
+    //res.json() =>把資料轉成JSON格式
+    lists.value = await res.json();
+    console.log('lists.value', lists.value)
   } catch (error) {
     console.log(error)
   }
+};
+const addBlogItem = async () => {
+  try {
+    const api = `${import.meta.env.VITE_QUIZ_URL}/api/blog`
 
+    let headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      //  "Authorization": `Bearer ${token}`,
+    }
+    //以下是API文件中提及必寫的主體参數
+    let body = {
+      "title": "Blog 1",
+      "subTitle": "Blog 1 sub",
+      "description": "description1"
+    }
+    fetch(api, {
+      method: "POST",
+      headers: headers,
+      //別忘了把主體参數轉成字串，否則資料會變成[object Object]，它無法被成功儲存在後台
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(json => console.log('',json));
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
 onMounted(() => {
   getData();
