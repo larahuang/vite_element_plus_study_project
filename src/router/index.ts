@@ -16,10 +16,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Table1.vue')
     },
      {
-        path: '/table',
+        path: '/table2',
         name: 'Table',
         //views資料夾內必須要有Home.vue
-        component: () => import('../views/Table.vue')
+        component: () => import('../views/Table2.vue')
     },
     {
     path: "/:catchAll(.*)",
