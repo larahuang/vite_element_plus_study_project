@@ -50,7 +50,7 @@
                     class="m-2"
                     placeholder="Select"
                     style="width: 240px"
-                    @change="onChange($event)"
+                    @change="changeItemsPerPage($event)"
                 >
                 <el-option
                 v-for="item in pagePerOptions"
@@ -61,6 +61,7 @@
                 </el-select>
             </li>
     </ul>
+
 </div>
 </template>
 
@@ -73,9 +74,7 @@ const searchQuery = ref<string>('');
 const currentPage = ref<number>(1);
 // 每頁幾筆
 const itemsPerPage = ref<number>(10);
-const onChange = (event: number) => {
-    // console.log(event);
-    // changePerItems.value = event;
+const changeItemsPerPage = (event: number) => {
     itemsPerPage.value = event;
 }
 const pagePerOptions = [
@@ -86,7 +85,7 @@ const pagePerOptions = [
     { value: '40', label: '40筆' },
     { value: '50', label: '50筆' },
 ]
-const pageValue = ref<string>('10筆')
+const pageValue = ref<string>('10筆');
 interface tableHeaderType {
     subject?: string;
     thid?: string;
@@ -177,7 +176,8 @@ const getItems = async () => {
     }
 }
 onMounted(() => {
-    getItems()
+    getItems();
+    console.log(typeof pagePerOptions)
 })
 </script>
 
