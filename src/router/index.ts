@@ -9,6 +9,12 @@ const routes: Array<RouteRecordRaw> = [
         //views資料夾內必須要有Home.vue
         component: () => import('../views/Home.vue')
   },
+  {
+        path: '/table1',
+        name: 'Table1',
+        //views資料夾內必須要有Home.vue
+        component: () => import('../views/Table1.vue')
+    },
      {
         path: '/table',
         name: 'Table',
