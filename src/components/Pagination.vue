@@ -1,13 +1,13 @@
 <template>
     <ul class="pagination">
-        <li :disabled="currentPage === 1">
+        <li :class="{'disabled': currentPage === 1 }">
             <a @click="sendprevPage"><i class="icon-chevron-left-solid"></i></a>
         </li>
         <li v-for="(n, index ) in totalPages" :key="index" @click="sendItActive(n)"
             :class="{ 'active': n === currentPage }">
             <a> {{ n }}</a>
         </li>
-        <li :disabled="currentPage === totalPages">
+        <li :disabled="currentPage === totalPages" :class="{ 'disabled': currentPage === totalPages }">
             <a @click="sendNextPage">
                 <i class="icon-chevron-right-solid"></i>
             </a>

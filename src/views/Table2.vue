@@ -1,9 +1,9 @@
 <template>
 <div class="checkWork_area"> 
     <div class="search_bar_group">
-        <button class="el-button el-button--primary"> 導出Excel</button>
+        <el-button type="primary"> 導出Excel</el-button>
         <!--綁定input  v-model="searchQuery"-->
-        <input class="el-input__inner" 
+        <el-input 
         v-model="searchQuery" placeholder="search"/>
         <i class="icon-search"></i>
     </div>
@@ -39,6 +39,7 @@
             @sendItActive="itActive"
             @sendOnChange="changeItemsPerPage"
                  />
+
 </div>
 </template>
 
@@ -157,5 +158,6 @@ onMounted(() => {
     getItems();
 })
 </script>
+
 
 
