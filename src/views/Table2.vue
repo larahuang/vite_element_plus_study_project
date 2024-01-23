@@ -9,6 +9,7 @@
     </div>
     <!----table-->
 <div class="check_table_area">
+    <table class="table">
         <tr>
              <th v-for="(item,thid) in tableHeader" :key="thid">
                 {{item.subject}}
@@ -24,7 +25,8 @@
                 
             </tr>
         </tbody>
-    </div>
+    </table>
+</div>
 
 <!--Pagination-->
     <Pagination 
