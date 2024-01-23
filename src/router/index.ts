@@ -20,6 +20,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Table',
         //views資料夾內必須要有Home.vue
         component: () => import('../views/Table2.vue')
+  },
+  {
+    path: '/teleport',
+    name: 'Teleport',
+        //views資料夾內必須要有Home.vue
+        component: () => import('../views/Teleport.vue')
     },
     {
     path: "/:catchAll(.*)",
