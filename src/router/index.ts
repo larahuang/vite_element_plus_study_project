@@ -26,7 +26,15 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Teleport',
         //views資料夾內必須要有Home.vue
         component: () => import('../views/Teleport.vue')
-    },
+  },
+  {
+    path: '/products',
+    component: () => import('../views/Products.vue')
+  },
+   {
+    path: '/product/:id',
+    component: () => import('../views/Product.vue')
+  },
     {
     path: "/:catchAll(.*)",
     name: "404",

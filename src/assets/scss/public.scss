@@ -8,10 +8,32 @@
         margin: auto 10px;
         a{
            text-decoration:none; 
+           cursor: pointer;
         }
     }
 }
-
+.products{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    .item{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: auto 10px;
+        width: 200px;
+               
+        .card{
+            width: 100%;
+            max-width: 100%;
+            img{
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}
 /*modal*/
 .modal {
     position: fixed;
