@@ -1,4 +1,18 @@
 
+.navMenu{
+    list-style-type: none;
+    display: flex;
+    li{
+        list-style-type: none;
+        display: flex;
+        margin: auto 10px;
+        a{
+           text-decoration:none; 
+        }
+    }
+}
+
+/*modal*/
 .modal {
     position: fixed;
     z-index: 999;
@@ -69,7 +83,7 @@
         color: cornflowerblue
     }
 }
-
+/*出勤管理*/
 .checkWork_area {
     display: flex;
     flex-direction: column;

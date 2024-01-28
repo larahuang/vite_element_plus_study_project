@@ -1,4 +1,18 @@
 <template>
+  <ul class="navMenu">
+    <li
+      v-for="(item, index, id) in homeMenu"
+      :key="id"
+      :class="active == index ? 'isActive' : ''"
+      @click="clickActive(index)"
+      >
+        <router-link 
+        :to="item.href" 
+        class="hvr-underline-from-center">
+          {{ item.title }}
+        </router-link>
+  </li>
+</ul>
   <div>
     <el-row class="mb-4">
       <el-button>Default</el-button>
@@ -41,15 +55,25 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-} from '@element-plus/icons-vue'
+import {Check,Delete,Edit,Message,Search,Star,} from '@element-plus/icons-vue'
 import axios from 'axios'
+
+const active = ref<number>(0)
+const isActive = ref<boolean>(false)
+const clickActive = (index: number) => {
+  active.value = index
+}
+interface homeMenuType{
+  id?: string;
+  title?: string;
+  href?: string;
+}
+const homeMenu = ref<homeMenuType[]>([
+  {id:'teleport', title: 'Teleport', href: '/teleport' },
+  { id: 'table1', title: 'Table1', href: '/table1' },
+   { id: 'table2', title: 'Table2', href: '/table2' },
+
+])
 
 interface listType {
   UID?: string;
