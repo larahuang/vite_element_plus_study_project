@@ -1,9 +1,9 @@
 <template>
-   <div>
-    <div>{{ route.query?.UID }}</div>
+   <div style="width:40%;max-width:40%;margin:auto">
+    <div>ID{{ route.query?.UID }}</div>
+   <img style="width:100%;max-width:100%" :src="route.query.imageUrl">
      <div>{{ route.query?.title }}</div>
-     <div>{{ route.query?.masterUnit[0]
-          }}</div>
+     <div>{{ route.query.masterUnit[0]}}</div>
    </div>
 </template>
 
