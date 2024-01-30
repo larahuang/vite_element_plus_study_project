@@ -21,8 +21,10 @@ const router = useRouter()
 const openItem = (item: any ) => {
     console.log(item.UID)
     router.push({
-        path: `/product/${item.UID}`,
-        query: item,//item.UID.toString
+       // path: `/product/${item.UID}`,
+        // query: item,
+        name:'Product',
+       params:{id:item.UID},
     })
 }
 const lists = ref<listType[]>([]);
