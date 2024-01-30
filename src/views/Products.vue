@@ -2,7 +2,7 @@
    <div class="products">
     <div class="item"
     v-for="(item,index, UID) in lists" :key="UID">
-      <a @click="openItem(item.UID)"> <div class="card">
+      <a @click="openItem(item)"> <div class="card">
             <img :src="item.imageUrl">
 {{ item.title }}
         </div></a> 
@@ -14,34 +14,16 @@
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
+import { listType } from '@/types/productsType';
 const route = useRoute();
 const router = useRouter()
-interface listType {
-    UID?: string;
-    category?: string;
-    comment?: string;
-    descriptionFilterHtml?: string;
-    discountInfo?: string | any;
-    editModifyDate?: string;
-    endDate?: string;
-    hitRate?: number;
-    imageUrl?: string;
-    masterUnit?: object;
-    otherUnit?: object;
-    showInfo?: object;
-    showUnit?: string;
-    sourceWebName?: string | any;
-    sourceWebPromote?: string;
-    startDate?: string | any;
-    subUnit?: object;
-    supportUnit?: object;
-    version?: string;
-    title?: string | any;
-    webSales?: string;
-}
-const openItem = (UID:any) => {
-    console.log(UID)
-    router.push({path: `/product/${UID}`})
+
+const openItem = (item: any ) => {
+    console.log(item.UID)
+    router.push({
+        path: `/product/${item.UID}`,
+        query: item,//item.UID.toString
+    })
 }
 const lists = ref<listType[]>([]);
 const getData = async () => {
