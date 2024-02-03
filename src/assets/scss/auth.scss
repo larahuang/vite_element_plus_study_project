@@ -1,0 +1,54 @@
+.auth {
+    .auth-form-wrapper{
+        max-width: 100%;
+        margin:50px auto;
+        width: 35%;
+        .e-card{
+            background-color:#e1f5fe ; 
+        }
+        .auth-welcome{
+            color: #2098D1;
+            padding-top: 35px;
+            margin: 0px auto;
+            text-align: center;
+        }
+        .auth-title{
+            margin: 10px auto;
+            text-align: center;
+        }
+        .auth-box{
+            margin-top: 35px;
+            .el-card__body{
+                    width: 90%;
+                .el-form--default{
+                    .el-form-item{
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+    }
+}
+.password{
+    .el-form-item__content{
+        position: relative;
+        i{
+            font-size: 1rem;
+            left: 90%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%); 
+        }
+    }
+}
+
+@media (width<=767px) {
+    .auth{
+        .auth-form-wrapper{
+            width: 90%;
+        }
+        .auth-box{
+            margin-top: 25px;
+        } 
+    }
+}

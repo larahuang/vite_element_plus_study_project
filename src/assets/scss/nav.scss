@@ -1,0 +1,39 @@
+.navMenu{
+    list-style-type: none;
+    display: flex;
+    li{
+        list-style-type: none;
+        display: flex;
+        margin: auto 10px;
+        a{
+           text-decoration:none; 
+           color:#333;
+           cursor: pointer;
+        }
+    }
+}
+.isActive{
+    border-bottom: 2px solid rgb(54, 135, 235);
+}
+.adminBg{
+    background-color: #333;
+    color:#ddd;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    padding-inline-start: 0px;
+    justify-content: flex-end;
+   
+    li{
+        height: 60px; 
+        a{
+            color:white;
+            display: flex;
+            align-content: center;
+            align-self: center;
+        }
+        &:last-child{
+            margin-right:90px ;
+        }
+    }
+  
+}

@@ -1,39 +1,67 @@
 //createWebHashHistory
 import {createRouter,createWebHistory,RouterOptions,Router,
-RouteRecordRaw,} from "vue-router"
+  RouteRecordRaw,
+} from "vue-router"
 
+import Layout from "../layout/Layout.vue"
+import LayoutBack from "../layout/LayoutBack.vue"
 const routes: Array<RouteRecordRaw> = [
-    {
-        path: '/',
-        name: 'Home',
-        //views資料夾內必須要有Home.vue
-        component: () => import('../views/Home.vue')
-  },
   {
+    path: "/",
+    redirect: "/index",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("../views/Home.vue"),
+        name: "Login",
+        meta: { title: "首頁", noAauth: true },
+      },
+      {
         path: '/table1',
         name: 'Table1',
-        //views資料夾內必須要有Home.vue
         component: () => import('../views/Table1.vue')
-    },
+      },
+      {
+          path: '/table1',
+          name: 'Table1',
+          component: () => import('../views/Table1.vue')
+      },
      {
-        path: '/table2',
+        path: '/table2/:page',
         name: 'Table',
-        //views資料夾內必須要有Home.vue
         component: () => import('../views/Table2.vue')
+      },
+      {
+        path: '/teleport',
+        name: 'Teleport',
+            component: () => import('../views/Teleport.vue')
+      },
+      {
+        path: '/products',
+        name: 'Products',
+        component: () => import('../views/Products.vue')
+      },
+      {
+        path: '/product/:id',
+          name: 'Product',
+        component: () => import('../views/Product.vue')
+      },
+    ]
   },
   {
-    path: '/teleport',
-    name: 'Teleport',
-        //views資料夾內必須要有Home.vue
-        component: () => import('../views/Teleport.vue')
-  },
-  {
-    path: '/products',
-    component: () => import('../views/Products.vue')
-  },
-   {
-    path: '/product/:id',
-    component: () => import('../views/Product.vue')
+   //後台
+    path: "/admin/",
+    //  redirect: "/admin",
+    component: LayoutBack,
+    children: [
+      {
+        path: "index",
+        component: () => import("../views/Dashboard/Admin.vue"),
+        name: "Admin",
+        meta: { title: "admin", requiresAuth: true },
+      },
+    ]
   },
     {
     path: "/:catchAll(.*)",
@@ -53,5 +81,21 @@ const options: RouterOptions = {
 
 // Router是路由對象類型
 const router: Router = createRouter(options);
+
+// router.beforeEach(async (to, from, next) => {
+//   const isAuthenticated = localStorage.getItem("token")
+//   if (to.name == "Login" || to.name == "Register" || to.name == "FormDesign") {
+//     // console.log(from)
+//     next()
+//   } else {
+//     if (isAuthenticated === null || isAuthenticated === "") {
+//       ElMessage.error("你還沒有登入 請先登入")
+//       to.name !== "Admin"
+//       next({ name: "Login" })
+//     } else {
+//       next()
+//     }
+//   }
+// })
 
 export default router

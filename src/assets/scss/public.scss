@@ -1,4 +1,34 @@
 
+body {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.el-input {
+    height: 45px;
+}
+.button_group{
+    display: flex;
+    justify-content: center;
+}
+.adminBg{
+    background-color: #333;
+    color:#ddd;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    padding-inline-start: 0px;
+    li{
+        height: 60px;
+        a{
+            color:white;
+            display: flex;
+            align-content: center;
+            align-self: center;
+        }
+    }
+  
+}
 .navMenu{
     list-style-type: none;
     display: flex;
@@ -12,6 +42,7 @@
         }
     }
 }
+/*products*/
 .products{
     display: flex;
     flex-direction: row;
@@ -22,8 +53,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         margin: auto 10px;
-        width: 200px;
-               
+        width: 200px;        
         .card{
             width: 100%;
             max-width: 100%;
@@ -130,26 +160,7 @@
         }
     }
 
-    .pagination {
-        display: flex;
-        justify-content: center;
-        list-style-type:none;
-        
-        > li {
-            &.disabled{
-                color:#ddd;
-            }
-            display: flex;
-            list-style-type:none;
-            margin: auto 15px;
-            &.active {
-                a {
-                    color: red;
-                }
-            }
-
-        }
-    }
+   
 }
 
 .check_table {
@@ -170,3 +181,26 @@
         border: 1px solid #ddd;
     }
 }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style-type:none;
+        position: fixed;
+        bottom: 3px;
+        right: 50px;
+        > li {
+            &.disabled{
+                color:#ddd;
+            }
+            display: flex;
+            list-style-type:none;
+            margin: auto 15px;
+            &.active {
+                a {
+                    color: red;
+                }
+            }
+
+        }
+    }
