@@ -68,7 +68,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
 import { useRouter } from "vue-router"
-import { Login, Register } from "../api/auth"
+import { Login} from "../api/user"
 import { ElMessage } from "element-plus"
 import { FormInstance } from "element-plus"
 const router = useRouter()
@@ -113,6 +113,7 @@ const validatorMessage = computed<any>(() => ({
     submit: '送出',
     cancel: '取消',
 }))
+const errorMessage = ref<string>('');
 // 登入
 const LoginSubmit = (formEl: FormInstance | undefined) => {
     if (!formEl) return
@@ -124,28 +125,26 @@ const LoginSubmit = (formEl: FormInstance | undefined) => {
                     password: loginForms.value.password,
                 }
                 const res = await Login(query);
-                if (res.token) {
-                    localStorage.setItem("token", res.token)
+                if (res.status === 200) {
+                    localStorage.setItem("token", res.data.token)
                     ElMessage({
-                        message: "Success!",
-                        type: "success",
-                    })
-                    router.push({
-                        name: "Admin",
-                    })
-               }
+                        message: "Success!", type: "success",
+                    });
+                    router.push({ name: "Admin", })
+                }
+
             } catch (err: any) {
                 console.log(err)
-                // errorMessage.value = err.response.message;
-                // const error = errorMessage.value
-                // switch (error) {
-                //   case "用戶不存在":
-                //     ElMessage.error(t("forms.userNull"))
-                //     break
-                //   case "密碼錯誤 ！":
-                //     ElMessage.error(t("forms.passwordError"))
-                //     break
-                // }
+                errorMessage.value = err.response.message;
+                const error = errorMessage.value
+                switch (error) {
+                  case "用戶不存在":
+                    ElMessage.error(t("forms.userNull"))
+                    break
+                  case "密碼錯誤 ！":
+                    ElMessage.error(t("forms.passwordError"))
+                    break
+                }
             }
 
             //  }
