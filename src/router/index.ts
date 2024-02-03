@@ -5,6 +5,8 @@ import {createRouter,createWebHistory,RouterOptions,Router,
 
 import Layout from "../layout/Layout.vue"
 import LayoutBack from "../layout/LayoutBack.vue"
+import { ElMessage } from "element-plus"
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -82,20 +84,21 @@ const options: RouterOptions = {
 // Router是路由對象類型
 const router: Router = createRouter(options);
 
-// router.beforeEach(async (to, from, next) => {
-//   const isAuthenticated = localStorage.getItem("token")
-//   if (to.name == "Login" || to.name == "Register" || to.name == "FormDesign") {
-//     // console.log(from)
-//     next()
-//   } else {
-//     if (isAuthenticated === null || isAuthenticated === "") {
-//       ElMessage.error("你還沒有登入 請先登入")
-//       to.name !== "Admin"
-//       next({ name: "Login" })
-//     } else {
-//       next()
-//     }
-//   }
-// })
+// 導航守衛
+router.beforeEach(async (to, from, next) => {
+  const isAuthenticated = localStorage.getItem("token")
+  if (to.name == "Login" || to.name == "Register" || to.name == "FormDesign") {
+    // console.log(from)
+    next()
+  } else {
+    if (isAuthenticated === null || isAuthenticated === "") {
+      ElMessage.error("你還沒有登入 請先登入")
+      to.name !== "Admin"
+      next({ name: "Login" })
+    } else {
+      next()
+    }
+  }
+})
 
 export default router
