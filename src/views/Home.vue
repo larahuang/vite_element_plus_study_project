@@ -77,41 +77,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed,onMounted } from "vue"
-import { useRouter } from "vue-router"
-import { Login} from "../api/user"
-import { ElMessage } from "element-plus"
-import { FormInstance } from "element-plus"
-import {loginFormType,rulesLoginType,validatorMessageType}from "../types/loginType"
-const router = useRouter()
-//FormInstance
-const formRef = ref<FormInstance>();
+import {storeToRefs } from 'pinia'
+import {computed,onMounted } from "vue"
+import { useLoginStore } from '../stores/login'
+import {validatorMessageType}from "../types/loginType"
+    const storeLogin = useLoginStore();
+    const { formRef,loginForms,passwordVisible,checkPasswordVisible,rulesLogin,code_box,errorMessage } = storeToRefs(storeLogin);
+    const { generateCode,showCode,LoginSubmit,resetForm } = storeLogin;
 
-//Login表單數據
-const loginForms = ref<loginFormType>({
-    // username: '',//admin
-    email: "",
-    password: "", //admin
-    verification: "",
-})
-const passwordVisible = ref(false);
-const checkPasswordVisible = ref(false)
 
-//Login表單驗證
-const rulesLogin = computed<rulesLoginType>(() => ({email: [
-        { required: true, message: '不能為空', trigger: "blur" },
-        {type: "email",message: '不能為空',trigger: ["blur", "change"]},
-    ],
-    password: [
-        { required: true, message: '不能為空', trigger: "blur" },
-        { min: 6, max: 30, message: '不能為空', trigger: "blur" },
-    ],
-  
-    verification:[
-        { required: true, message: '驗證碼不能為空！', trigger: "blur" },
-        { validator: checkVerification, trigger: 'blur' }
-    ]
-}))
 //驗證訊息
 const validatorMessage = computed<validatorMessageType>(() => ({
     username:'使用者',
@@ -127,67 +101,6 @@ const validatorMessage = computed<validatorMessageType>(() => ({
     cancel: '取消',
 }))
 
-const errorMessage = ref<string>('');
-// 驗證碼產生
-const code_box =ref<string>('');
-const generateCode =(length=6)=>{
-    let chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let code = "";
-    for (var i = 0; i < length; i++) {
-        code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    code_box.value=code;
-}
-    //點擊獲得新的驗證碼
-const showCode =() => {
-    generateCode();
-}
- //驗證碼驗證
-const checkVerification =(_rule: object, value: string, callback: Function)=>{
-    value !== code_box.value?callback(new Error('驗證碼輸入錯誤')):callback();
-}
-// 登入
-const LoginSubmit = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.validate(async (valid: any) => {
-        if (valid) {
-            try {
-                let query = {
-                    email: loginForms.value.email,
-                    password: loginForms.value.password,
-                }
-                const res = await Login(query);
-                if (res.status === 200) {
-                    localStorage.setItem("token", res.data.token)
-                    ElMessage({
-                        message: "Success!", type: "success",
-                    });
-                    router.push({ name: "Admin", })
-                }
-
-            } catch (err: any) {
-                console.log(err)
-                errorMessage.value = err.response.message;
-                const error = errorMessage.value
-                switch (error) {
-                  case "用戶不存在":
-                    ElMessage.error(t("forms.userNull"))
-                    break
-                  case "密碼錯誤 ！":
-                    ElMessage.error(t("forms.passwordError"))
-                    break
-                }
-            }
-        } else {
-            return false
-        }
-    })
-}
-// 重置
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
-}
 onMounted(() => {
     generateCode();
 })    
