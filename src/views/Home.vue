@@ -82,12 +82,13 @@ import { useRouter } from "vue-router"
 import { Login} from "../api/user"
 import { ElMessage } from "element-plus"
 import { FormInstance } from "element-plus"
+import {loginFormType,rulesLoginType,validatorMessageType}from "../types/loginType"
 const router = useRouter()
 //FormInstance
 const formRef = ref<FormInstance>();
 
 //Login表單數據
-const loginForms = ref<any>({
+const loginForms = ref<loginFormType>({
     // username: '',//admin
     email: "",
     password: "", //admin
@@ -95,28 +96,24 @@ const loginForms = ref<any>({
 })
 const passwordVisible = ref(false);
 const checkPasswordVisible = ref(false)
-//Login表單驗證
-const rulesLogin = computed<any>(() => ({
-    email: [
-        { required: true, message: '不能為空', trigger: "blur" },
-        {
-            type: "email",
-            message: '不能為空',
-            trigger: ["blur", "change"],
-        },
-    ],
 
+//Login表單驗證
+const rulesLogin = computed<rulesLoginType>(() => ({email: [
+        { required: true, message: '不能為空', trigger: "blur" },
+        {type: "email",message: '不能為空',trigger: ["blur", "change"]},
+    ],
     password: [
         { required: true, message: '不能為空', trigger: "blur" },
         { min: 6, max: 30, message: '不能為空', trigger: "blur" },
     ],
+  
     verification:[
         { required: true, message: '驗證碼不能為空！', trigger: "blur" },
         { validator: checkVerification, trigger: 'blur' }
     ]
 }))
 //驗證訊息
-const validatorMessage = computed<any>(() => ({
+const validatorMessage = computed<validatorMessageType>(() => ({
     username:'使用者',
     usernameRequire: '使用者',
     welcome: '歡迎光臨',
@@ -181,8 +178,6 @@ const LoginSubmit = (formEl: FormInstance | undefined) => {
                     break
                 }
             }
-
-            //  }
         } else {
             return false
         }
