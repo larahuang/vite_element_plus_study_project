@@ -1,72 +1,83 @@
 <template>
     <div class="auth disflex ai-cen">
         <div class="auth-form-wrapper disflex">
-        <div class="auth-box">
-            <el-card class="auth-inner flex-center">
-            <div class="auth-img-wrapper bg-prim">
-                <div class="auth-welcome border">
-                welcome
+            <div class="auth-box">
+                <el-card class="auth-inner flex-center">
+                <div class="auth-img-wrapper bg-prim">
+                    <div class="auth-welcome border">
+                    welcome
+                    </div>
+                
                 </div>
-               
-            </div>
-            <el-form
-                class="auth-form mb30"
-                :model="loginForms"
-                label-width="100px"
-                label-position="left"
-                ref="formRef"
-            >
-                <el-form-item
-                prop="email"
-                :label="validatorMessage.email"
-                :rules="rulesLogin.email"
+                <el-form
+                    class="auth-form mb30"
+                    :model="loginForms"
+                    label-width="100px"
+                    label-position="left"
+                    ref="formRef"
                 >
-                <el-input
-                    v-model="loginForms.email"
-                    :placeholder="validatorMessage.emailRequire"
-                />
-                </el-form-item>
+                    <el-form-item
+                    prop="email"
+                    :label="validatorMessage.email"
+                    :rules="rulesLogin.email"
+                    >
+                    <el-input
+                        v-model="loginForms.email"
+                        :placeholder="validatorMessage.emailRequire"
+                    />
+                    </el-form-item>
 
-                <el-form-item
-                class="password"
-                prop="password"
-                :label="validatorMessage.password"
-                :rules="rulesLogin.password"
-                >
-                <el-input
-                    :type="passwordVisible === false ? 'password' : 'input'"
-                    v-model="loginForms.password"
-                    :placeholder="validatorMessage.passwordRequire"
-                />
-                <i
-                    @click="passwordVisible = !passwordVisible"
-                    :class="
-                    passwordVisible === false ? 'icon-eye-blocked' : 'icon-eye'
-                    "
-                ></i>
-                </el-form-item>
-            </el-form>
+                    <el-form-item
+                    class="password"
+                    prop="password"
+                    :label="validatorMessage.password"
+                    :rules="rulesLogin.password"
+                    >
+                    <el-input
+                        :type="passwordVisible === false ? 'password' : 'input'"
+                        v-model="loginForms.password"
+                        :placeholder="validatorMessage.passwordRequire"
+                    />
+                    <i
+                        @click="passwordVisible = !passwordVisible"
+                        :class="
+                        passwordVisible === false ? 'icon-eye-blocked' : 'icon-eye'
+                        "
+                    ></i>
+                    </el-form-item>
 
-            <div class="button_group mb-8">
-                <el-button class="auth-btn" @click="resetForm(formRef)">
-                {{ validatorMessage.cancel }}
-                </el-button>
-                <el-button
-                type="primary"
-                class="auth-btn"
-                @click="LoginSubmit(formRef)"
-                >
-                {{ validatorMessage.submit }}
-                </el-button>
+                    <el-form-item class="verification" prop="verification"
+                     :rules="rulesLogin.verification"
+                     label="驗證碼">
+                        <el-input  v-model.trim="loginForms.verification"/>
+                        <div class="codeBox">{{code_box}}</div>
+                        <a class="btn_change" @click="showCode">
+                            <i class="icon-loop2"></i>
+                        </a>
+                    </el-form-item>
+                
+
+                <div class="button_group mb-8">
+                    <el-button class="auth-btn" @click="resetForm(formRef)">
+                    {{ validatorMessage.cancel }}
+                    </el-button>
+                    <el-button
+                    type="primary"
+                    class="auth-btn"
+                    @click="LoginSubmit(formRef)"
+                    >
+                    {{ validatorMessage.submit }}
+                    </el-button>
+                </div>
+                </el-form>
+                </el-card>
             </div>
-            </el-card>
-        </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { ref, computed,onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { Login} from "../api/user"
 import { ElMessage } from "element-plus"
@@ -80,6 +91,7 @@ const loginForms = ref<any>({
     // username: '',//admin
     email: "",
     password: "", //admin
+    verification: "",
 })
 const passwordVisible = ref(false);
 const checkPasswordVisible = ref(false)
@@ -98,6 +110,10 @@ const rulesLogin = computed<any>(() => ({
         { required: true, message: '不能為空', trigger: "blur" },
         { min: 6, max: 30, message: '不能為空', trigger: "blur" },
     ],
+    verification:[
+        { required: true, message: '驗證碼不能為空！', trigger: "blur" },
+        { validator: checkVerification, trigger: 'blur' }
+    ]
 }))
 //驗證訊息
 const validatorMessage = computed<any>(() => ({
@@ -113,7 +129,26 @@ const validatorMessage = computed<any>(() => ({
     submit: '送出',
     cancel: '取消',
 }))
+
 const errorMessage = ref<string>('');
+// 驗證碼產生
+const code_box =ref<string>('');
+const generateCode =(length=6)=>{
+    let chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let code = "";
+    for (var i = 0; i < length; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    code_box.value=code;
+}
+    //點擊獲得新的驗證碼
+const showCode =() => {
+    generateCode();
+}
+ //驗證碼驗證
+const checkVerification =(_rule: object, value: string, callback: Function)=>{
+    value !== code_box.value?callback(new Error('驗證碼輸入錯誤')):callback();
+}
 // 登入
 const LoginSubmit = (formEl: FormInstance | undefined) => {
     if (!formEl) return
@@ -158,4 +193,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
 }
+onMounted(() => {
+    generateCode();
+})    
 </script>
