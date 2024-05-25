@@ -1,17 +1,15 @@
 <template>
 <div class="checkWork_area"> 
     <div class="search_bar_group">
-        <el-button type="primary"> 導出Excel</el-button>
+        <button class="el-button el-button--primary"> 導出Excel</button>
         <!--綁定input  v-model="searchQuery"-->
-        <el-input 
+        <input class="el-input__inner" 
         v-model="searchQuery" placeholder="search"/>
         <i class="icon-search"></i>
     </div>
     <!----table-->
 <div class="check_table_area">
-    <table class="table">
         <tr>
-             <span @click="sortededItems">1</span>
              <th v-for="(item,thid) in tableHeader" :key="thid">
                 {{item.subject}}
             </th>
@@ -21,39 +19,55 @@
             <tr v-for="(item,index) in paginatedItems" :key="index">
     			<td>{{ Number(index+1 + startIndexValue) }}</td>
     			<td>{{ item.title }}</td>
-    			<td>{{item.sourceWebName}}
-                   
-                    </td>
+    			<td>{{item.sourceWebName}}</td>
     			<td>{{ item.startDate}}</td>
                 
             </tr>
         </tbody>
-    </table>
-</div>
+    </div>
 
-<!--Pagination-->
-    <Pagination 
-            :currentPage="currentPage" 
-            :totalPages="totalPages" 
-            :totoItem="filteredItems.length"
-            :pagePerOptions="pagePerOptions"
-            :pageValue="pageValue"
-            @update:pageValue="pageValue = $event"
-            @sendprevPage="prevPage" 
-            @sendNextPage="nextPage"
-            @sendItActive="itActive"
-            @sendOnChange="changeItemsPerPage"
-            />
+<!--＊分頁-->
+<ul class="pagination">
+        <!--如果在第一頁時 上一頁就是disabled-->
+    	<li :disabled="currentPage === 1" > 
+            <a @click="prevPage">
+                <i class="icon-chevron-left-solid"></i>
+            </a>
+        </li>
+        <!--總頁數遍歷 ＝>如果當頁的點擊的 page就是active -->
+    	<li v-for="(n,index ) in totalPages" :key="index" @click="itActive(n)" 
+        :class="{ 'active': n === currentPage }" >
+            <a>{{ n }}</a>
+        </li>
+         <!--如果在當前頁面等於總頁數就是disabled-->
+    	<li :disabled="currentPage === totalPages" >   
+            <a @click="nextPage"><i class="icon-chevron-right-solid"></i></a>
+        </li>
+         <li>共{{ paginatedItems.length }}筆</li>
+            <li>
+                <el-select
+                    v-model="pageValue"
+                    class="m-2"
+                    placeholder="Select"
+                    style="width: 240px"
+                    @change="changeItemsPerPage($event)"
+                >
+                <el-option
+                v-for="item in pagePerOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                />
+                </el-select>
+            </li>
+    </ul>
 
 </div>
 </template>
 
 <script setup lang="ts">
 import axios from 'axios';
-import { ref, onMounted, computed, watch, watchEffect } from 'vue';
-import Pagination from '@/components/Pagination.vue';
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { ref, onMounted, computed } from 'vue';
 // 搜尋表單綁定
 const searchQuery = ref<string>('');
 // 當前頁面
@@ -78,7 +92,7 @@ interface tableHeaderType {
 }
 const tableHeader = ref<tableHeaderType[]>([
     { subject: '項目', thid: 'item' },
-    { subject: '主題', thid: 'title', },
+    { subject: '主題', thid: 'title' },
     { subject: '來源', thid: 'orange' },
     { subject: '開始時間', thid: 'startTime' }
 ])
@@ -98,54 +112,24 @@ interface listsType {
     sourceWebName?: string | any;
     startDate?: string | any;
 }
-
 // 表格數據
 const lists = ref<listsType[]>([]);
-//const sortBy =ref<string>('')
-const sortededItems = () => {
-    //.slice()
-    filteredItems.value.sort((a: any, b: any) =>
-        //https://www.w3school.com.cn/jsref/jsref_localecompare.asp
-        //  a.startDate.localeCompare(b.startDate)
-        Number(a.startDate) > Number(b.startDate) ? 1 : -1
-     //  a.sourceWebName.localeCompare(b.sourceWebName) ? 1 : -1
-    )
-}
-//監聽數據
-const search = ref('');
-watch(search, (newValue, oldValue) => {
-    console.log('watch search', newValue, oldValue)
-})
-
-
 // A搜尋功能過濾:綁定搜尋表單，使用computed（計算功能）如果搜尋表單沒有值＝>返回獲取到的陣列;如果有那就搜尋表單去除空白與大小寫 indexOf !==-1，返回它 並返回陣列
 const filteredItems = computed(() => {
     let filteredItems = lists.value;
     if (searchQuery.value === '') {
-        // return sortededItems(lists.value);
-       return filteredItems;
+        return filteredItems;
     }
     searchQuery.value = searchQuery.value.trim().toLowerCase();
     filteredItems = filteredItems.filter(function (opt: listsType) {
         // indexOf !==-1 =>
         if (opt.title.toLowerCase().indexOf(searchQuery.value) !== -1 || opt.sourceWebName.toLowerCase().indexOf(searchQuery.value) !== -1) {
-          //  if (filteredItems.length <= itemsPerPage.value) {
+            // return opt;
             return currentPage.value = 1;
-            //   return opt;
-          //  }       
-            
         }
     })
     return filteredItems;
 })
-
-// watch(filteredItems.value, (newValue, oldValue) => {
-//     console.log('watch search', newValue, oldValue)
-// })
-// watchEffect(() => {
-//     console.log('watchEffect', lists.value, filteredItems.value)
-// })
-
 // 索引數字
 const startIndexValue = ref<number>(1);
 
@@ -194,8 +178,8 @@ const getItems = async () => {
 }
 onMounted(() => {
     getItems();
+    console.log(typeof pagePerOptions)
 })
 </script>
-
 
 

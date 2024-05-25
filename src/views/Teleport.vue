@@ -1,6 +1,5 @@
 <template>
  <button class="el-button el-button--primary" @click="open = true">Open Modal</button>
-
     <Teleport  to="body">
         <!--
       <div v-if="open" class="modal">
@@ -15,40 +14,57 @@
             </div>
         </div>
       </div>-->
-      <Alert :open="open" :lists="lists" :dynamicValidateForm="dynamicValidateForm" 
-      @sendOpen="close" :formRef="formRef"
-      @sendRemoveDomain="removeDomain" @sendSubmitForm="submitForm" 
-      @sendResetForm="resetForm" @sendAddDomain="addDomain"/>
+      <Alert 
+      :open="open" 
+      :lists="lists" 
+      :dynamicValidateForm="dynamicValidateForm" 
+      :dynamicRules="dynamicRules"
+      @sendOpen="close" 
+      :formRef="formRef"
+      @sendRemoveDomain="removeDomain" 
+      @sendSubmitForm="submitForm" 
+      @sendResetForm="resetForm" 
+      @sendAddDomain="addDomain"/>
     </Teleport>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import Alert from './Alert.vue'
+import { ref, reactive } from 'vue';
+import Alert from './Alert.vue';
+import type { FormInstance, FormRules } from 'element-plus'
 const open = ref<boolean>(false);
 const close = () => {
     open.value=false
 }
 const lists = ref<any[]>([
     { 'subject': 'one', id: 123 },
-     { 'subject': 'two', id: 221 }
+    { 'subject': 'two', id: 221 }
 ]);
 import type { FormInstance } from 'element-plus'
 
-const formRef = ref<FormInstance>()
-const dynamicValidateForm = reactive<{
-    domains: DomainItem[]
+const formRef = ref<FormInstance>();
+interface dynamicValidateFormType{
+    domains: DomainItem[],
     email: string
-}>({
+}
+const dynamicValidateForm = reactive<dynamicValidateFormType>(
+    {
+        domains: [{key: 1,value: ''}],email: '',
+    })
+interface RuleForm {
+    domains:string,
+    email: string   
+}
+const rules = reactive<FormRules<RuleForm>>({
     domains: [
-        {
-            key: 1,
-            value: '',
-        },
+        { required: true, message: 'domain can not be null', trigger: 'blur', }
     ],
-    email: '',
+    email: [
+        {required: true,message: 'Please input email address',trigger: 'blur'},
+        {type: 'email',message: 'Please input correct email address',trigger: ['blur', 'change']},
+    ],
+   
 })
-
 interface DomainItem {
     key: number
     value: string
@@ -70,7 +86,7 @@ const addDomain = () => {
 
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    formEl.validate((valid) => {
+    formEl.validate((valid:any) => {
         if (valid) {
             console.log('submit!')
         } else {

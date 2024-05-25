@@ -19,3 +19,6 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 
 ### 安裝Vue &環境變數設定
 <a href="https://blog-lara.vercel.app/2022/12/01/vite/" target="_blank">Vite 安裝與環境變數設定</a>
+
+
+https://www.bolzjb.com/archives/M8VxNUOe.html

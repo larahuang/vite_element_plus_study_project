@@ -8,32 +8,32 @@
             </el-button>
         </div>
 
-        <el-table v-loading="loading" :data="pagedTableData" border fit highlight-current-row style="width: 100%"
+        <el-table v-loading="loading" :data="pagedTableData" border fit highlight-current-row style="wempnoth: 100%"
             @sort-change="sortChange">
-            <el-table-column width="80" align="center" label="項目" prop="id">
+            <el-table-column wempnoth="80" align="center" label="項目" prop="empno">
                 <template v-slot="{ row }">
-                    <span>{{ row.id }}</span>
+                    <span>{{ row.empno }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column width="160" align="center" label="推薦" prop="isRecommended"
+            <el-table-column wempnoth="160" align="center" label="推薦" prop="isRecommended"
                 sortable="custom">
                 <template v-slot="{ row }">
                     <el-switch v-model="row.isRecommended.value" :disabled="!row.edit" class="ml-2" />
                 </template>
             </el-table-column>
 
-            <el-table-column width="120" align="center" label="姓名" prop="name" sortable="custom">
+            <el-table-column wempnoth="120" align="center" label="姓名" prop="empname" sortable="custom">
                 <template v-slot="{ row }">
                     <template v-if="row.edit">
-                        <el-input v-model="row.name.value" class="edit-input" size="small" />
+                        <el-input v-model="row.empname.value" class="edit-input" size="small" />
                     </template>
-                    <span v-else>{{ row.name?.value }}</span>
+                    <span v-else>{{ row.empname?.value }}</span>
                 </template>
             </el-table-column>
 <!--操作-->
             <el-table-column align="center" 
-            label="操作" width="200">
+            label="操作" wempnoth="200">
                 <template v-slot="{ row, $index }">
                     <div class="test-actions">
                         <template v-if="row.edit">
@@ -98,11 +98,11 @@ const list = ref([] as Record<string, any>[])
 
 const canEditedKeys = [
     { key: 'isRecommended', needCheck: false },
-    { key: 'name', needCheck: true }
+    { key: 'empname', needCheck: true }
 ]
 const dialog = ref({
     show: false,
-    hashtagId: ''
+    hashtagempno: ''
 })
 
 const mockTestItems = ref([] as Record<string, any>[])
@@ -122,27 +122,27 @@ const getTableData = async () => {
 const getMockItems = async () => {
     try {
         const result = [
-            { id: 1, isRecommended: true, name: 'A' },
-            { id: 2, isRecommended: true, name: 'B' },
-            { id: 3, isRecommended: true, name: 'C' },
-            { id: 4, isRecommended: true, name: 'D' },
-            { id: 5, isRecommended: false, name: 'HashTag #5' },
-            { id: 6, isRecommended: true, name: 'HashTag #6' },
-            { id: 7, isRecommended: true, name: 'HashTag #7' },
-            { id: 8, isRecommended: true, name: 'HashTag #8' },
-            { id: 9, isRecommended: true, name: 'HashTag #9' },
-            { id: 10, isRecommended: false, name: 'HashTag #10' },
-            { id: 11, isRecommended: true, name: 'HashTag #11' },
-            { id: 12, isRecommended: true, name: 'HashTag #12' },
-            { id: 13, isRecommended: true, name: 'HashTag #13' },
-            { id: 14, isRecommended: true, name: 'HashTag #14' },
-            { id: 15, isRecommended: false, name: 'HashTag #15' },
-            { id: 16, isRecommended: true, name: 'HashTag #16' },
-            { id: 17, isRecommended: true, name: 'HashTag #17' },
-            { id: 18, isRecommended: true, name: 'HashTag #18' },
-            { id: 19, isRecommended: true, name: 'HashTag #19' },
-            { id: 20, isRecommended: false, name: 'HashTag #20' },
-            { id: 21, isRecommended: true, name: 'HashTag #21' }
+            { empno: 1, isRecommended: true, empname: 'A' },
+            { empno: 2, isRecommended: true, empname: 'B' },
+            { empno: 3, isRecommended: true, empname: 'C' },
+            { empno: 4, isRecommended: true, empname: 'D' },
+            { empno: 5, isRecommended: false, empname: 'HashTag #5' },
+            { empno: 6, isRecommended: true, empname: 'HashTag #6' },
+            { empno: 7, isRecommended: true, empname: 'HashTag #7' },
+            { empno: 8, isRecommended: true, empname: 'HashTag #8' },
+            { empno: 9, isRecommended: true, empname: 'HashTag #9' },
+            { empno: 10, isRecommended: false, empname: 'HashTag #10' },
+            { empno: 11, isRecommended: true, empname: 'HashTag #11' },
+            { empno: 12, isRecommended: true, empname: 'HashTag #12' },
+            { empno: 13, isRecommended: true, empname: 'HashTag #13' },
+            { empno: 14, isRecommended: true, empname: 'HashTag #14' },
+            { empno: 15, isRecommended: false, empname: 'HashTag #15' },
+            { empno: 16, isRecommended: true, empname: 'HashTag #16' },
+            { empno: 17, isRecommended: true, empname: 'HashTag #17' },
+            { empno: 18, isRecommended: true, empname: 'HashTag #18' },
+            { empno: 19, isRecommended: true, empname: 'HashTag #19' },
+            { empno: 20, isRecommended: false, empname: 'HashTag #20' },
+            { empno: 21, isRecommended: true, empname: 'HashTag #21' }
         ]
         return result
     } catch (err) {
@@ -188,7 +188,7 @@ const searchTags = async (type?: string, options?: null | undefined | Record<'pr
         await new Promise(resolve => setTimeout(resolve, 1000))
 
         let result = mockTestItems.value
-            .filter(v => v.name.includes(searchQuery.value.keyword.trim()) || (searchQuery.value.keyword.trim() === ''))
+            .filter(v => v.empname.includes(searchQuery.value.keyword.trim()) || (searchQuery.value.keyword.trim() === ''))
 
         if (type === 'sort' || (searchQuery.value.sort.prop !== null && searchQuery.value.sort.order !== null)) {
             const prop = options?.prop || searchQuery.value.sort.prop
@@ -254,12 +254,12 @@ const confirmEdit = async (row: Record<string, any>) => {
 
         /* mock save data via api*/
         await new Promise(resolve => setTimeout(resolve, 500))
-        mockTestItems.value[mockTestItems.value.findIndex(obj => obj.id === row.id)] = {
-            id: row.id,
+        mockTestItems.value[mockTestItems.value.findIndex(obj => obj.empno === row.empno)] = {
+            empno: row.empno,
             isRecommended: row.isRecommended.value,
-            name: row.name.value
+            empname: row.empname.value
         }
-        list.value[list.value.findIndex(obj => obj.id === row.id)] = {
+        list.value[list.value.findIndex(obj => obj.empno === row.empno)] = {
             ...row
         }
 
@@ -279,7 +279,7 @@ const triggerDelete = async (row: Record<string, any>, index: number) => {
 
         /* mock delete via api */
         await new Promise(resolve => setTimeout(resolve, 500))
-        mockTestItems.value.splice(mockTestItems.value.findIndex(obj => obj.id === row.id), 1)
+        mockTestItems.value.splice(mockTestItems.value.findIndex(obj => obj.empno === row.empno), 1)
         list.value.splice(index, 1)
 
         console.log('finish delete')

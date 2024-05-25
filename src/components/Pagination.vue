@@ -1,30 +1,32 @@
 <template>
-    <ul class="pagination">
-        <li :class="{'disabled': currentPage === 1 }">
-            <a @click="sendprevPage"><i class="icon-chevron-left-solid"></i></a>
-        </li>
-        <li v-for="(n, index ) in totalPages" :key="index" @click="sendItActive(n)"
-            :class="{ 'active': n === currentPage }">
-            <a> {{ n }}</a>
-        </li>
-        <li :disabled="currentPage === totalPages" :class="{ 'disabled': currentPage === totalPages }">
-            <a @click="sendNextPage">
-                <i class="icon-chevron-right-solid"></i>
-            </a>
-        </li>
-        <li>共{{ totoItem }}筆</li>
-        <li>
-            <el-select 
-            :model-value="pageValue"
-            @update:model-value="$emit('update:pageValue', $event)"
-             class="m-2" 
-             placeholder="Select" 
-             style="width: 240px"
-                @change="sendOnChange($event)">
-                <el-option v-for="item in pagePerOptions" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-        </li>
-    </ul>
+    <div>
+        <ul class="pagination">
+            <li :class="{ 'disabled': currentPage === 1 }">
+                <a @click="sendprevPage"><i class="icon-chevron-left-solid"></i></a>
+            </li>
+            <li v-for="(n, index ) in totalPages" :key="index" @click="sendItActive(n)"
+                :class="{ 'active': n === currentPage }">
+                <a> {{ n }}</a>
+            </li>
+            <li :disabled="currentPage === totalPages" :class="{ 'disabled': currentPage === totalPages }">
+                <a @click="sendNextPage">
+                    <i class="icon-chevron-right-solid"></i>
+                </a>
+            </li>
+            <li>共{{ totoItem }}筆</li>
+            <li>
+                <el-select 
+                :model-value="pageValue"
+                @update:model-value="$emit('update:pageValue', $event)"
+                 class="m-2" 
+                 placeholder="Select" 
+                 style="width: 240px"
+                    @change="sendOnChange($event)">
+                    <el-option v-for="item in pagePerOptions" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -34,7 +36,9 @@ const props = defineProps({
     currentPage: { type: Number },
     totalPages: { type: Number },
     totoItem: { type: Number },
-    pagePerOptions: Object,
+    pagePerOptions: {
+        type: Object
+    },
     pageValue: { type: String },
 
 })
