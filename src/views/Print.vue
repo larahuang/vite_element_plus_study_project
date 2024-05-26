@@ -3,15 +3,8 @@
     <h1>{{ msg }}</h1>
       <button v-print="print">Print!</button>
     <h2>Essential Links</h2>
-    <div id="printArea">Print Area
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-  文字123
+    <div id="printArea">
+
     </div>
   
    
@@ -22,12 +15,38 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-const msg = ref<string>('Welcome to Your Vue.js App')
-const print =ref<any>(
+const msg = ref<string>('Welcome to Your Vue.js App');
+interface printType{
+  url?: string |undefined,
+  id: string |undefined,
+  popTitle: string |undefined,
+  extraHead: string |undefined,
+  preview: boolean, 
+  previewTitle: string |undefined,
+  previewPrintBtnLabel: string |undefined,
+  zIndex:number |null,
+  previewBeforeOpenCallback(): void;
+  previewOpenCallback(): void;
+  beforeOpenCallback(): void;
+  openCallback(): void;
+  closeCallback(): void;
+  clickMounted(): void;
+  asyncUrl(reslove:any, vue:any): void;
+  standard: string |undefined,
+  extarCss: string |undefined,
+}
+const print =ref<printType>(
     {
+        url: 'http://localhost:8080/',
+        asyncUrl (reslove:any, vue:any) {
+          
+                // setTimeout(() => {
+                //   reslove('http://localhost:8080/')
+                // }, 2000)
+        },
         id: 'printArea',
         popTitle: '配置页眉标题', // 打印配置页上方的标题
-        extraHead: '打印', // 最上方的头部文字，附加在head标签上的额外标签，使用逗号分割
+         extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>', // 最上方的头部文字，附加在head标签上的额外标签，使用逗号分割
         preview: true, // 是否启动预览模式，默认是false
         previewTitle: '員工設定列表', // 打印预览的标题
         previewPrintBtnLabel: '預覽結果，開始打印', // 打印预览的标题下方的按钮文本，点击可进入打印
@@ -39,7 +58,8 @@ const print =ref<any>(
         closeCallback () { console.log('关闭了打印工具！') }, // 关闭打印的callback(无法区分确认or取消)
         clickMounted () { console.log('点击v-print绑定的按钮了！') },
         standard: '',
-        extarCss: ''
+        extarCss: '',
+        
     }
 )
 //https://github.com/Power-kxLee/vue3-print-nb
@@ -53,7 +73,7 @@ const print =ref<any>(
 .previewBodyUtil{
  background: #ffff !important;
    
-    .previewBodyUtilPrintBtn{
+.previewBodyUtilPrintBtn{
  background: cornflowerblue !important;
     }
 }
