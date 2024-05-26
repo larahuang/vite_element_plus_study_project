@@ -89,6 +89,45 @@ const routes: Array<RouteRecordRaw> = [
         name: "Three",
         meta: { title: "Three", requiresAuth: true },
       },
+        {
+        path: "/four",
+        component: () => import("../views/Dashboard/Four.vue"),
+        name: "Four",
+        meta: { title: "Four", requiresAuth: true },
+      },
+
+        {
+        path: "/five",
+        component: () => import("../views/Dashboard/Five.vue"),
+        name: "Five",
+        meta: { title: "Six", requiresAuth: true },
+      },
+      
+        {
+        path: "/six",
+        component: () => import("../views/Dashboard/Six.vue"),
+        name: "Six",
+        meta: { title: "Six", requiresAuth: true },
+      },
+       {
+        path: "/el",
+        component: () => import("../views/Dashboard/El.vue"),
+        name: "El",
+        meta: { title: "El", requiresAuth: true },
+      },
+      {
+        path: "/eight",
+        component: () => import("../views/Dashboard/Eight.vue"),
+        name: "Eight",
+        meta: { title: "Eight", requiresAuth: true },
+      },
+       {
+        path: "/ten",
+        component: () => import("../views/Dashboard/Ten.vue"),
+        name: "Ten",
+        meta: { title: "Ten", requiresAuth: true },
+      },
+        
     ]
   },
     {

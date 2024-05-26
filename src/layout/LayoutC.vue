@@ -29,7 +29,7 @@
                                 <router-link :to="item.href">{{ item.title }} </router-link>
                             </li>
                         </ul>
-                        
+                        <!--
                         <ul class="horizontalNav">
                             <li v-for="item in horizontalfilter" :key="item.title">
                                 <router-link :to="item.href">
@@ -39,7 +39,30 @@
                                 </router-link>   
                             </li>
                         </ul>
+
+-->
+<swiper
+        :modules="modules"
+        :slides-per-view="3"
+        :space-between="10"
+        :loop="false"
+        :autoplay="false"
+       
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+    >
+        <swiper-slide v-for="item in horizontalfilter" :key="item.title">
+            <a :href="item.href">{{ item.title }}  
+                <i class="icon-cross"
+                     @click.prevent="deleteHorizontalNav(item.title)">
+                </i>
+            </a>
+        </swiper-slide>
+    </swiper>
+
                     </div>
+  
+    
                     <router-view />
                 </div>
             </div>
@@ -50,10 +73,14 @@
 <script setup lang="ts">
 import { ref, computed ,onMounted} from "vue"
 import { useRouter } from 'vue-router'
+
 import Nav from "../components/Nav.vue"
 import Side from "../components/otherSide.vue";
 import { homeMenuType } from "@/types/navMenuType";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, Pagination, Navigation, Scrollbar }from 'swiper/modules'; 
     const router = useRouter()
+    
     const active = ref<number>(0)
     const isActive = ref<boolean>(false)
     const clickActive = (index: number) => {
@@ -83,6 +110,14 @@ import { homeMenuType } from "@/types/navMenuType";
             } 
         })
     }
+    const modules = [Autoplay, Pagination, Navigation, Scrollbar]
+    const onSwiper = (swiper:any) => {
+        console.log(swiper);
+    };
+    const onSlideChange = () => {
+        console.log('slide change');
+    };
+
     // 點擊左邊菜單新增到使用頁眉
     const clickActiveSide = (i: horizontalNavType) => {
         activeSide.value = i.id;
@@ -131,13 +166,13 @@ import { homeMenuType } from "@/types/navMenuType";
                     {id:'001-1',title: "工程資料建檔",href:"/one"},
                     {id:'001-2',title: "供料資料建檔",href:"/two"},
                     {id:'001-3',title: "零用金存入",href:"/three"},
-                    {id:'001-4',title: "完工日期批次異動",href:""},
-                    {id:'001-5',title: "工料類別建檔",href:""},
-                    {id:'001-6',title: "菜購合約建檔",href:""},
-                    {id:'001-7',title: "人員設定作業",href:"/person_setting"},
-                    {id:'001-8',title: "部門類別建檔",href:"/depart_build"},
-                    {id:'001-9',title: "工種資料建檔",href:""},
-                    {id:'001-10',title: "假日匯入Excel",href:""},
+                    {id:'001-4',title: "完工日期批次異動",href:"/four"},
+                    {id:'001-5',title: "工料類別建檔",href:"/five"},
+                    {id:'001-6',title: "菜購合約建檔",href:"/six"},
+                    {id:'001-7',title: "人員設定作業",href:"/el"},
+                    {id:'001-8',title: "部門類別建檔",href:"/eight"},
+                    {id:'001-9',title: "工種資料建檔",href:"/night"},
+                    {id:'001-10',title: "假日匯入Excel",href:"ten"},
                     {id:'001-11',title: "工作日誌建檔",href:""},
                     {id:'001-12',title: "業主資料建檔",href:""},
                 ],
@@ -347,3 +382,44 @@ import { homeMenuType } from "@/types/navMenuType";
        localStorage.removeItem('horizontalFilter')
     });
 </script>
+
+
+<style lang="scss">
+.swiper{
+    margin-left: 15px;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    &.swiper-horizontal{
+        text-align: left;
+        margin-left: 45px;
+    }
+    .swiper-wrapper{
+        display: flex;
+        justify-content: flex-start;
+        overflow: visible;
+            align-items: center;
+        .swiper-slide{
+            width: auto!important;background-color: cornflowerblue;
+            color: white;
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 7px;
+            height: 38px;
+            a{
+                color: white;
+                display: flex;
+                align-items: center;
+                .icon-cross{
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+}
+
+
+</style>

@@ -8,6 +8,8 @@ import "element-plus/dist/index.css"
 import "./assets/icomoon/style.css"
 import "./assets/scss/all.scss"
 import "@/assets/css/hover.css"
+import '@/assets/css/swiper-bundle.css';
+
 const pinia = createPinia()
 const app = createApp(App)
     app.use(print)
