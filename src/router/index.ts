@@ -5,6 +5,7 @@ import {createRouter,createWebHistory,RouterOptions,Router,
 
 import Layout from "../layout/Layout.vue"
 import LayoutBack from "../layout/LayoutBack.vue"
+import LayoutC from "../layout/LayoutC.vue"
 import { ElMessage } from "element-plus"
 
 const routes: Array<RouteRecordRaw> = [
@@ -61,7 +62,7 @@ const routes: Array<RouteRecordRaw> = [
    //後台
     path: "/admin/",
     //  redirect: "/admin",
-    component: LayoutBack,
+    component: LayoutC,
     children: [
       {
         path: "index",
