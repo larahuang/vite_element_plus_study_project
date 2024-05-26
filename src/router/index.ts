@@ -49,6 +49,12 @@ const routes: Array<RouteRecordRaw> = [
           name: 'Product',
         component: () => import('../views/Product.vue')
       },
+      {
+         
+        path: '/print', 
+        name: 'Print',
+        component: () => import('../views/Print.vue')
+      }
     ]
   },
   {
@@ -62,6 +68,25 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/Dashboard/Admin.vue"),
         name: "Admin",
         meta: { title: "admin", requiresAuth: true },
+      },
+      {
+        path: "/one",
+        component: () => import("../views/Dashboard/One.vue"),
+        name: "One",
+        meta: { title: "One", requiresAuth: true },
+      },
+       {
+        path: "/two",
+        component: () => import("../views/Dashboard/Two.vue"),
+        name: "Two",
+        meta: { title: "Two", requiresAuth: true },
+      },
+       
+       {
+        path: "/three",
+        component: () => import("../views/Dashboard/Three.vue"),
+        name: "Three",
+        meta: { title: "Three", requiresAuth: true },
       },
     ]
   },

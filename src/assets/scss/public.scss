@@ -4,6 +4,33 @@ body {
     margin: 0;
     padding: 0;
 }
+.adminNav{
+    align-items: center;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    .logo{
+        display: flex;
+         margin-left: 15px;
+    }
+}
+.admin{
+    display: flex;
+    .left{
+        display: flex;
+    }
+    .rightContent{
+        display: flex;flex-direction: column;
+        width:calc(100% - 240px);
+        max-width:100%;
+        .horizontal_menu{
+            display: flex;
+            .horizontalNav{
+                display: flex;
+            }
+        }
+    }
+}
 
 .el-input {
     height: 45px;

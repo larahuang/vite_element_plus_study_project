@@ -24,6 +24,7 @@ declare module 'vue' {
     LeftNavBar: typeof import('./src/components/LeftNavBar.vue')['default']
     Nav: typeof import('./src/components/Nav.vue')['default']
     NavAdmin: typeof import('./src/components/NavAdmin.vue')['default']
+    OtherSide: typeof import('./src/components/otherSide.vue')['default']
     Pagination: typeof import('./src/components/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -29,6 +29,7 @@ const homeMenu = ref<homeMenuType[]>([
     { id: 'table1', title: 'Table1', href: '/table1' },
     { id: 'table2', title: 'Table2', href: '/table2/1' },
     { id: 'products', title: 'products', href: '/products' },
+     { id: 'print', title: 'print', href: '/print' },
 ])
 
 </script>
