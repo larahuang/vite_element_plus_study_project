@@ -26,8 +26,10 @@ declare module 'vue' {
     NavAdmin: typeof import('./src/components/NavAdmin.vue')['default']
     OtherSide: typeof import('./src/components/otherSide.vue')['default']
     Pagination: typeof import('./src/components/Pagination.vue')['default']
+    PhotoCapture: typeof import('./src/components/PhotoCapture.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VideoCapture: typeof import('./src/components/VideoCapture.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

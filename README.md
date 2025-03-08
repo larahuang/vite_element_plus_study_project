@@ -17,8 +17,21 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
+### 
+Node 18.12.1
+
 ### 安裝Vue &環境變數設定
 <a href="https://blog-lara.vercel.app/2022/12/01/vite/" target="_blank">Vite 安裝與環境變數設定</a>
 
 
 https://www.bolzjb.com/archives/M8VxNUOe.html
+
+### vue-voice-recorder
+
+```
+npm install vue-voice-recorder --save
+npm install --save @types/vue-media-recorder
+```
+
+### VueUse 
+https://vueuse.org/guide/

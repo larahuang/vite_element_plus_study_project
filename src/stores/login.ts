@@ -11,8 +11,8 @@ export const useLoginStore = defineStore('login', () => {
     const formRef = ref<FormInstance>();
     // Login表單數據
     const loginForms = ref<loginFormType>({
-        email: "",
-        password: "", //admin
+        email: "lara1105huang@gmail.com",
+        password: "Lara1234567", //admin
         verification: "",
     })
     // 定義密碼表單顯示text
@@ -60,6 +60,8 @@ export const useLoginStore = defineStore('login', () => {
         if (!formEl) return
         formEl.validate(async (valid: any) => {
             if (valid) {
+                // console.log('test @keyup.enter');
+                //  router.push({ name: "Teleport", })
                 try {
                     let query = {
                         email: loginForms.value.email,

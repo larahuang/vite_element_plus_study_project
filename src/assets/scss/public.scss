@@ -4,6 +4,28 @@ body {
     margin: 0;
     padding: 0;
 }
+//
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 0px;
+  text-decoration: none;
+  margin: 0px;
+  cursor: pointer;
+}
+
+.button_group .el-input{
+    margin-left: 8px;
+    width: 80px;
+    height: 32px;
+    .el-input__wrapper{
+        padding: 0;
+    }
+}
+
+
+
 .adminNav{
     align-items: center;
     background-color: #333;

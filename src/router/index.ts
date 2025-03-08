@@ -56,6 +56,13 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Print',
         component: () => import('../views/Print.vue')
       }
+      ,
+      {
+         
+        path: '/recorder', 
+        name: 'Recorder',
+        component: () => import('../views/Recorder.vue')
+      }
     ]
   },
   {
@@ -153,7 +160,7 @@ const router: Router = createRouter(options);
 router.beforeEach(async (to, from, next) => {
   const isAuthenticated = localStorage.getItem("token")
   if (to.name == "Login" || to.name == "Register" || to.name == "FormDesign") {
-    // console.log(from)
+    console.log('from', from)
     next()
   } else {
     if (isAuthenticated === null || isAuthenticated === "") {

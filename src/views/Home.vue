@@ -15,6 +15,7 @@
                     label-width="100px"
                     label-position="left"
                     ref="formRef"
+                    @keyup.enter="LoginSubmit(formRef)"
                 >
                     <el-form-item
                     prop="email"
@@ -68,6 +69,7 @@
                     >
                     {{ validatorMessage.submit }}
                     </el-button>
+                  
                 </div>
                 </el-form>
                 </el-card>
@@ -83,7 +85,7 @@ import { useLoginStore } from '../stores/login'
 import {validatorMessageType}from "../types/loginType"
     const storeLogin = useLoginStore();
     const { formRef,loginForms,passwordVisible,checkPasswordVisible,rulesLogin,code_box,errorMessage } = storeToRefs(storeLogin);
-    const { generateCode,showCode,LoginSubmit,resetForm } = storeLogin;
+    const { generateCode,showCode,resetForm,LoginSubmit } = storeLogin;
 
 
 //驗證訊息
