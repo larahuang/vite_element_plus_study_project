@@ -48,8 +48,12 @@
             </div>
             <div class="login_three_area">
                 <i @click="login" class="fa-brands fa-google-plus"></i>
-                <i class="fa-brands fa-facebook"></i>
+                <HFaceBookLogin v-slot="fbLogin" :app-id="fbAppID" @onSuccess="onSuccess" @onFailure="onFailure"
+                    scope="email,public_profile" fields="id,name,email,first_name,last_name,birthday">
+                    <i @click="fbLogin.initFBLogin" class="fa-brands fa-facebook"></i>
+                </HFaceBookLogin>
             </div>
+
         </div>
     </div>
 </template>
@@ -58,6 +62,7 @@
 import {storeToRefs } from 'pinia'
 import { ref, computed, onMounted } from "vue"
 import { googleAuthCodeLogin, googleSdkLoaded } from "vue3-google-login"
+import { HFaceBookLogin } from '@healerlab/vue3-facebook-login';
 import { useLoginStore } from '../stores/login'
 import {validatorMessageType}from "../types/loginType"
     const storeLogin = useLoginStore();
@@ -82,12 +87,46 @@ const validatorMessage = computed<validatorMessageType>(() => ({
 const clientId = ref<string>(`${import.meta.env.VITE_GOOGLE_CLIENT_ID}`)
 const login = () => {
     console.log('clientId' ,clientId.value)
-    googleAuthCodeLogin().then((response) => {
-        console.log("Handle the response", response)
+    googleAuthCodeLogin().then((res) => {
+        console.log("Handle the response", res)
         console.log(clientId.value)
     })
+}
+const loginS = () => {
+    googleSdkLoaded((google) => {
+        google.accounts.oauth2.initCodeClient({
+            client_id: clientId.value,
+            scope: "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+            callback: (res) => {
+                console.log("res", res)
+            }
+        }).requestCode()
+    })
+}
+const fbAppID = ref<string>(`${import.meta.env.VITE_FB_APP_ID}`)
+const onSuccess = (res: any) => {
+    // 取得你的身分驗證令牌和訊息
+    console.log(res)
+}
+
+const onFailure = () => {
+    // 身份驗證失敗時的邏輯
+    console.log('')
 }
 onMounted(() => {
     generateCode();
 })    
 </script>
+
+
+<style scoped lang="scss">
+.fb-button {
+    display: inline-block;
+    margin: 10px 0 10 0;
+    color: white;
+    background-color: #1967d2;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+}
+</style>
